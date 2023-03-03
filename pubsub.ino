@@ -32,6 +32,7 @@ unsigned long long millis_pub = 0;
 
 void setup()
 {
+  Serial.begin(9600);
   pinMode(13, OUTPUT);
   // attachInterrupt(0, isr, CHANGE); // прерывание пина радио по CHANGE
   nh.initNode();
@@ -48,6 +49,7 @@ void loop()
     str_msg.data = hello;
     chatter.publish(&str_msg);
     nh.spinOnce();
+    Serial.println(hello);
     millis_pub = millis();
   }
   if (millis() > 2100)
@@ -58,6 +60,7 @@ void loop()
     if (++count >= 100)
       count = 0;
     tx.sendData(data);
+    Serial.println(data);
     delay(100);
   }
   // if (rx.gotData())
